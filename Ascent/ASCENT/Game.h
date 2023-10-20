@@ -30,7 +30,7 @@ public:
 	Game& operator=(Game&&) = delete;
 
 private:
-	Game() : state(GameState::Gameplay), isRunning(true), isUpdatingActors(false), fps(nullptr), follow(nullptr) {}
+	Game() : isRunning(true), state(GameState::Gameplay), isUpdatingActors(false), fps(nullptr), follow(nullptr) {}
 
 public:
 	bool initialize();
@@ -69,10 +69,14 @@ private:
 	vector<Actor*> pendingActors;
 
 	//v Game specifics ===============================================
+	/// <summary>
+	/// Switch between different camera modes.
+	/// </summary>
 	void changeCamera(int mode);
 
 	SoundEvent musicEvent;
 	class FPSActor* fps;
+	class ShipActor* ship;
 	class FollowActor* follow;
 
 	//^ Game specifics ===============================================

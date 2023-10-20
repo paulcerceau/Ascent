@@ -37,6 +37,7 @@ public:
 	void setAngle(const Vector3& axis, float angle);
 	void rotate(const Vector3& axis, float angle);
 	Vector3 getForward() const;
+	Vector3 getUp() const;
 	Vector3 getRight() const;
 	void computeWorldTransform();
 

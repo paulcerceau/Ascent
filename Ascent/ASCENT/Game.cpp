@@ -1,24 +1,30 @@
 ﻿#include "Game.h"
-#include "Actor.h"
+
 #include "Timer.h"
-#include "Assets.h"
+
 #include "MeshComponent.h"
+#include "AudioComponent.h"
+
+#include "Actor.h"
+#include "FPSActor.h"
+#include "FollowActor.h"
+#include "ShipActor.h"
+
+#include "Assets.h"
+#include "Consts.h"
 #include "Cube.h"
 #include "Sphere.h"
 #include "Plane.h"
-#include "AudioComponent.h"
-#include "FPSActor.h"
-#include "FollowActor.h"
 
 
 bool Game::initialize()
 {
-	bool isWindowInit = window.initialize();
-	bool isRendererInit = renderer.initialize(window);
-	bool isAudioInit = audioSystem.initialize();
-	bool isInputInit = inputSystem.initialize();
+	const bool isWindowInit = window.initialize();
+	const bool isRendererInit = renderer.initialize(window);
+	const bool isAudioInit = audioSystem.initialize();
+	const bool isInputInit = inputSystem.initialize();
 
-	return isWindowInit && isRendererInit && isAudioInit && isInputInit; // Return bool && bool && bool ...to detect error
+	return isWindowInit && isRendererInit && isAudioInit && isInputInit; 
 }
 
 void Game::load()
@@ -44,9 +50,9 @@ void Game::load()
 
 	// MESHES ===============================
 	// -- Basic meshes --
-	Assets::loadMesh("GameRes\\Meshes\\BasicMeshes\\Cube.gpmesh", "Mesh_Cube");
-	Assets::loadMesh("GameRes\\Meshes\\BasicMeshes\\Plane.gpmesh", "Mesh_Plane");
-	Assets::loadMesh("GameRes\\Meshes\\BasicMeshes\\Sphere.gpmesh", "Mesh_Sphere");
+	Assets::loadMesh(R"(GameRes\Meshes\BasicMeshes\Cube.gpmesh)", "Mesh_Cube");
+	Assets::loadMesh(R"(GameRes\Meshes\BasicMeshes\Plane.gpmesh)", "Mesh_Plane");
+	Assets::loadMesh(R"(GameRes\Meshes\BasicMeshes\Sphere.gpmesh)", "Mesh_Sphere");
 
 	// -- Game specific meshes --
 
@@ -57,6 +63,7 @@ void Game::load()
 
 	fps = new FPSActor();
 	follow = new FollowActor();
+	ship = new ShipActor();
 
 	Cube* a = new Cube();
 	a->setPosition(Vector3(200.0f, 105.0f, 0.0f));
@@ -128,9 +135,10 @@ void Game::load()
 	ac->playEvent("event:/FireLoop");
 
 	// Start music
-	musicEvent = audioSystem.playEvent("event:/Music");
+	//musicEvent = audioSystem.playEvent("event:/Music");
 
-	changeCamera(1);
+	// Set camera mode to "Ship"
+	changeCamera(3);
 }
 
 void Game::processInput()
@@ -156,6 +164,7 @@ void Game::processInput()
 			isRunning = false;
 		}
 
+		// Change camera mode
 		if (input.keyboard.getKeyState(SDL_SCANCODE_1) == ButtonState::Pressed)
 		{
 			changeCamera(1);
@@ -164,10 +173,14 @@ void Game::processInput()
 		{
 			changeCamera(2);
 		}
+		else if (input.keyboard.getKeyState(SDL_SCANCODE_3) == ButtonState::Pressed)
+		{
+			changeCamera(3);
+		}
 
 		// Actor input
 		isUpdatingActors = true;
-		for (auto actor : actors)
+		for (const auto actor : actors)
 		{
 			actor->processInput(input);
 		}
@@ -186,7 +199,7 @@ void Game::update(float dt)
 	{
 		// Update actors 
 		isUpdatingActors = true;
-		for (auto actor : actors)
+		for (const auto actor : actors)
 		{
 			actor->update(dt);
 		}
@@ -209,18 +222,11 @@ void Game::update(float dt)
 				deadActors.emplace_back(actor);
 			}
 		}
-		for (auto deadActor : deadActors)
+		for (const auto deadActor : deadActors)
 		{
 			delete deadActor;
 		}
 	}
-}
-
-void Game::render()
-{
-	renderer.beginDraw();
-	renderer.draw();
-	renderer.endDraw();
 }
 
 void Game::changeCamera(int mode)
@@ -230,6 +236,7 @@ void Game::changeCamera(int mode)
 	fps->setVisible(false);
 	follow->setState(Actor::ActorState::Paused);
 	follow->setVisible(false);
+	ship->setState(Actor::ActorState::Paused);
 
 	// Enable the camera specified by the mode
 	switch (mode)
@@ -243,7 +250,18 @@ void Game::changeCamera(int mode)
 		follow->setState(Actor::ActorState::Active);
 		follow->setVisible(true);
 		break;
+	case 3:
+		ship->setState(Actor::ActorState::Active);
+		break;
 	}
+}
+
+#pragma region Engine
+void Game::render()
+{
+	renderer.beginDraw();
+	renderer.draw();
+	renderer.endDraw();
 }
 
 void Game::loop()
@@ -316,3 +334,5 @@ void Game::removeActor(Actor* actor)
 		actors.pop_back();
 	}
 }
+
+#pragma endregion

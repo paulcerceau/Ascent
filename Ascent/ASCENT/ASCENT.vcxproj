@@ -30,9 +30,11 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ControllerState.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="FlyingComponent.cpp" />
     <ClCompile Include="FollowActor.cpp" />
     <ClCompile Include="FollowCameraComponent.cpp" />
     <ClCompile Include="Font.cpp" />
+    <ClCompile Include="FpFlyingCameraComponent.cpp" />
     <ClCompile Include="FPSActor.cpp" />
     <ClCompile Include="FPSCameraComponent.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -52,6 +54,7 @@
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="RendererOGL.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShipActor.cpp" />
     <ClCompile Include="SoundEvent.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
@@ -73,12 +76,15 @@
     <ClInclude Include="CircleCollisionComponent.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="Consts.h" />
     <ClInclude Include="ControllerState.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="DirectionalLight.h" />
+    <ClInclude Include="FlyingComponent.h" />
     <ClInclude Include="FollowActor.h" />
     <ClInclude Include="FollowCameraComponent.h" />
     <ClInclude Include="Font.h" />
+    <ClInclude Include="FpFlyingCameraComponent.h" />
     <ClInclude Include="FPSActor.h" />
     <ClInclude Include="FPSCameraComponent.h" />
     <ClInclude Include="Game.h" />
@@ -99,6 +105,7 @@
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="RendererOGL.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShipActor.h" />
     <ClInclude Include="SoundEvent.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SpriteComponent.h" />

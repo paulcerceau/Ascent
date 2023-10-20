@@ -1,5 +1,7 @@
 #include "FPSCameraComponent.h"
 
+#include "Actor.h"
+
 FPSCameraComponent::FPSCameraComponent(Actor* ownerP):
 	CameraComponent(ownerP),
 	pitchSpeed(0.0f),

@@ -46,6 +46,18 @@
     <Filter Include="Engine\UI">
       <UniqueIdentifier>{f5610995-ebdb-450e-8d6d-fec8d1a75a7e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Components">
+      <UniqueIdentifier>{5f4c567e-2fe0-4725-8e66-508439a72b8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Actors">
+      <UniqueIdentifier>{c4dfbc4e-082c-4279-8a89-2a6f1cafb8ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Actors\Ship">
+      <UniqueIdentifier>{f4cc25f6-158a-4390-b240-b2a06e5d9e5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Utils">
+      <UniqueIdentifier>{df8447ca-e7b2-480b-baf0-53f4718df01e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -172,6 +184,13 @@
     <ClCompile Include="Font.cpp">
       <Filter>Engine\UI</Filter>
     </ClCompile>
+    <ClCompile Include="ShipActor.cpp">
+      <Filter>Game\Actors\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="FlyingComponent.cpp">
+      <Filter>Game\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="FpFlyingCameraComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -309,6 +328,16 @@
     <ClInclude Include="Font.h">
       <Filter>Engine\UI</Filter>
     </ClInclude>
+    <ClInclude Include="ShipActor.h">
+      <Filter>Game\Actors\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="FlyingComponent.h">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Consts.h">
+      <Filter>Game\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="FpFlyingCameraComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\Meshes\BasicMeshes\Cube.gpmesh">

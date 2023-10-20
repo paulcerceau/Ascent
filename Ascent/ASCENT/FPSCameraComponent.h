@@ -1,5 +1,4 @@
 #pragma once
-#include "Actor.h"
 #include "CameraComponent.h"
 
 class FPSCameraComponent : public CameraComponent
