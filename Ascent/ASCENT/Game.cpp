@@ -70,11 +70,43 @@ void Game::load()
 	a->setScale(100.0f);
 	Quaternion q(Vector3::unitY, -Maths::piOver2);
 	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
-	/*a->setRotation(q);*/
+	a->setRotation(q);
 
 	Sphere* b = new Sphere();
 	b->setPosition(Vector3(200.0f, -75.0f, 0.0f));
 	b->setScale(3.0f);
+
+	// -- ROTATIONS TESTS --
+	const Vector3 cubesOriginPosX{ 1000.0f, 0.0f, 0.0f };
+	const Vector3 cubesOriginPosY{ 0.0f, 500.0f, 0.0f };
+	Vector3 offset{ 0.0f, 0.0f, 0.0f };
+
+	const Quaternion yRot{ Vector3::unitY, -Maths::piOver2 };
+	const Quaternion zRot{ Vector3::unitZ, Maths::pi };
+	const Quaternion cubesOriginRot = Quaternion::concatenate(yRot, zRot);
+	
+	Quaternion additionalRot{ Vector3::unitZ, 0.0f };
+	const Quaternion zRotPiOverFour{ Vector3::unitZ, -Maths::pi / 4.0f };
+
+	for (Uint8 i = 0; i < 8; i++)
+	{
+		for (Uint8 i = 0; i < 2; i++) {
+			Cube* newCube = new Cube();
+
+			if (i % 2 == 0) {
+				newCube->setPosition(cubesOriginPosX + offset);
+			}
+			else {
+				newCube->setPosition(cubesOriginPosY + offset);
+			}
+			newCube->setScale(100.0f);
+
+			const Quaternion newCubeRotation = Quaternion::concatenate(cubesOriginRot, additionalRot);
+			newCube->setRotation(newCubeRotation);
+		}
+		offset += Vector3(0.0, 0.0f, 100.0f);
+		additionalRot = Quaternion::concatenate(additionalRot, zRotPiOverFour);
+	}
 
 
 	//v Place floor / walls ==========================================
