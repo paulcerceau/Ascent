@@ -183,9 +183,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>..\..\EngineResources\SDL\SDL2-2.0.12\include;..\..\EngineResources\SDL\SDL2_image-2.0.5\include;..\..\EngineResources\SDL\SDL2_mixer-2.0.4\include;..\..\EngineResources\SDL\SDL2_ttf-2.0.15\include;..\..\EngineResources\glew-2.1.0\include;..\..\EngineResources\rapidjson\include;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\inc;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\inc;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\EngineResources\SDL\SDL2-2.0.12\lib\x64;..\..\EngineResources\SDL\SDL2_image-2.0.5\lib\x64;..\..\EngineResources\SDL\SDL2_mixer-2.0.4\lib\x64;..\..\EngineResources\SDL\SDL2_ttf-2.0.15\lib\x64;..\..\EngineResources\glew-2.1.0\lib\Release\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\..\EngineResources\SDL\SDL2-2.0.12\include;$(SolutionDir)\..\EngineResources\SDL\SDL2_image-2.0.5\include;$(SolutionDir)\..\EngineResources\SDL\SDL2_mixer-2.0.4\include;$(SolutionDir)\..\EngineResources\SDL\SDL2_ttf-2.0.15\include;$(SolutionDir)\..\EngineResources\glew-2.1.0\include;$(SolutionDir)\..\EngineResources\rapidjson\include;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\inc;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\..\EngineResources\SDL\SDL2-2.0.12\lib\x64;$(SolutionDir)\..\EngineResources\SDL\SDL2_image-2.0.5\lib\x64;$(SolutionDir)\..\EngineResources\SDL\SDL2_mixer-2.0.4\lib\x64;$(SolutionDir)\..\EngineResources\SDL\SDL2_ttf-2.0.15\lib\x64;$(SolutionDir)\..\EngineResources\glew-2.1.0\lib\Release\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\lib;$(LibraryPath)</LibraryPath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -227,6 +228,13 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;opengl32.lib;glew32.lib;fmodL64_vc.lib;fmodstudioL64_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreLinkEvent>
+      <Command>xcopy /Y /D "$(SolutionDir)\ASCENT\dlls\*.dll" "$(OutDir)"</Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
