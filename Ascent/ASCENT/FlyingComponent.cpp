@@ -5,6 +5,7 @@
 #include "Actor.h"
 #include "Maths.h"
 #include "Vector3.h"
+#include <iostream>
 
 
 FlyingComponent::FlyingComponent(Actor* ownerP, int updateOrderP)
@@ -65,15 +66,16 @@ void FlyingComponent::update(float dt)
 		const float pitchAngle = pitchSpeed * dt;
 		const float yawAngle = yawSpeed * dt;
 
-		// TODO: fix rotations
-		//const Quaternion rollIncrement(Vector3::unitX, rollAngle);
-		//newRotation = Quaternion::concatenate(newRotation, rollIncrement);
+		const Quaternion rollIncrement(owner.getForward(), rollAngle);
+		newRotation = Quaternion::concatenate(newRotation, rollIncrement);
 
-		//const Quaternion pitchIncrement(Vector3::unitY, pitchAngle);
-		//newRotation = Quaternion::concatenate(newRotation, pitchIncrement);
+		const Quaternion pitchIncrement(owner.getRight(), pitchAngle);
+		newRotation = Quaternion::concatenate(newRotation, pitchIncrement);
 
-		const Quaternion yawIncrement(Vector3::unitZ, yawAngle);
+		const Quaternion yawIncrement(owner.getUp(), yawAngle);
 		newRotation = Quaternion::concatenate(newRotation, yawIncrement);
+
+		//std::cout << "Roll angle: " << rollAngle << std::endl;
 
 		owner.setRotation(newRotation);
 	}
