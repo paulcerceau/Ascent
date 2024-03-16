@@ -24,11 +24,11 @@ void FpFlyingCameraComponent::update(float dt)
 	pitch += pitchSpeed * dt;
 	pitch = Maths::clamp(pitch, -tempClamp, tempClamp); // TODO: define clamp values
 	Quaternion q{ owner.getRight(), pitch };
-	Vector3 viewForward = Vector3::transform(owner.getForward(), q);
 
-	Vector3 target = cameraPosition + viewForward * 100.0f;
-	Vector3 up = Vector3::transform(owner.getUp(), q);
-	Matrix4 view = Matrix4::createLookAt(cameraPosition, target, up);
+	const Vector3 viewForward = owner.getForward();
+	const Vector3 target = cameraPosition + viewForward * 100.0f;
+	// Vector3 up = Vector3::transform(owner.getUp(), q);
+	const Matrix4 view = Matrix4::createLookAt(cameraPosition, target, owner.getUp());
 	setViewMatrix(view);
 }
 
