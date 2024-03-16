@@ -25,7 +25,6 @@ void ShipActor::updateActor(const float dt)
 {
 	Actor::updateActor(dt);
 
-
 }
 
 void ShipActor::actorInput(const InputState& inputState)
@@ -69,11 +68,11 @@ void ShipActor::actorInput(const InputState& inputState)
 	// Roll
 	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_Q))
 	{
-		rollSpeed += 400.0f;
+		rollSpeed += Maths::piOver2;
 	}
 	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_E))
 	{
-		rollSpeed -= 400.0f;
+		rollSpeed -= Maths::piOver2;
 	}
 
 	flyingComponent->setForwardSpeed(forwardSpeed);
