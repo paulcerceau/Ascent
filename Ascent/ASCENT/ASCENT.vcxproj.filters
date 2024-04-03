@@ -40,9 +40,6 @@
     <Filter Include="Engine\Systems\Input">
       <UniqueIdentifier>{4adef845-c737-43db-8eea-327631bcfacc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\BasicMeshes">
-      <UniqueIdentifier>{9de01ea9-8b16-4531-96c7-12a09fb05199}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\UI">
       <UniqueIdentifier>{f5610995-ebdb-450e-8d6d-fec8d1a75a7e}</UniqueIdentifier>
     </Filter>
@@ -57,6 +54,9 @@
     </Filter>
     <Filter Include="Game\Utils">
       <UniqueIdentifier>{df8447ca-e7b2-480b-baf0-53f4718df01e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Meshes\BasicMeshes">
+      <UniqueIdentifier>{9de01ea9-8b16-4531-96c7-12a09fb05199}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -190,7 +190,9 @@
     <ClCompile Include="FlyingComponent.cpp">
       <Filter>Game\Components</Filter>
     </ClCompile>
-    <ClCompile Include="FpFlyingCameraComponent.cpp" />
+    <ClCompile Include="FpFlyingCameraComponent.cpp">
+      <Filter>Game\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -337,24 +339,11 @@
     <ClInclude Include="Consts.h">
       <Filter>Game\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="FpFlyingCameraComponent.h" />
+    <ClInclude Include="FpFlyingCameraComponent.h">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Res\Meshes\BasicMeshes\Cube.gpmesh">
-      <Filter>Engine\BasicMeshes</Filter>
-    </None>
-    <None Include="Res\Meshes\BasicMeshes\Plane.gpmesh">
-      <Filter>Engine\BasicMeshes</Filter>
-    </None>
-    <None Include="Res\Meshes\BasicMeshes\Sphere.gpmesh">
-      <Filter>Engine\BasicMeshes</Filter>
-    </None>
-    <None Include="Res\Meshes\RacingCar.gpmesh">
-      <Filter>Engine\Meshes</Filter>
-    </None>
-    <None Include="Res\Meshes\Rifle.gpmesh">
-      <Filter>Engine\Meshes</Filter>
-    </None>
     <None Include="Res\Shaders\BasicMesh.frag">
       <Filter>Engine\Shaders</Filter>
     </None>
@@ -372,6 +361,21 @@
     </None>
     <None Include="Res\Shaders\Sprite.vert">
       <Filter>Engine\Shaders</Filter>
+    </None>
+    <None Include="GameRes\Meshes\RacingCar.gpmesh">
+      <Filter>Engine\Meshes</Filter>
+    </None>
+    <None Include="GameRes\Meshes\Rifle.gpmesh">
+      <Filter>Engine\Meshes</Filter>
+    </None>
+    <None Include="GameRes\Meshes\BasicMeshes\Cube.gpmesh">
+      <Filter>Engine\Meshes\BasicMeshes</Filter>
+    </None>
+    <None Include="GameRes\Meshes\BasicMeshes\Plane.gpmesh">
+      <Filter>Engine\Meshes\BasicMeshes</Filter>
+    </None>
+    <None Include="GameRes\Meshes\BasicMeshes\Sphere.gpmesh">
+      <Filter>Engine\Meshes\BasicMeshes</Filter>
     </None>
   </ItemGroup>
 </Project>

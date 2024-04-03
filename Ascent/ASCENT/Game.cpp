@@ -3,6 +3,7 @@
 #include "Timer.h"
 
 #include "MeshComponent.h"
+#include "SpriteComponent.h"
 #include "AudioComponent.h"
 
 #include "Actor.h"
@@ -12,6 +13,7 @@
 
 #include "Assets.h"
 #include "Consts.h"
+
 #include "Cube.h"
 #include "Sphere.h"
 #include "Plane.h"
@@ -45,6 +47,8 @@ void Game::load()
 	Assets::loadTexture(renderer, "GameRes\\Textures\\Cube.png", "Cube");
 	Assets::loadTexture(renderer, "GameRes\\Textures\\Plane.png", "Plane");
 	Assets::loadTexture(renderer, "GameRes\\Textures\\Sphere.png", "Sphere");
+	Assets::loadTexture(renderer, "GameRes\\Textures\\RacingCar.png", "RacingCar");
+	Assets::loadTexture(renderer, "GameRes\\Textures\\ShipCockpit.png", "ShipCockpit");
 
 	// -- Game specific textures --
 
@@ -53,6 +57,7 @@ void Game::load()
 	Assets::loadMesh(R"(GameRes\Meshes\BasicMeshes\Cube.gpmesh)", "Mesh_Cube");
 	Assets::loadMesh(R"(GameRes\Meshes\BasicMeshes\Plane.gpmesh)", "Mesh_Plane");
 	Assets::loadMesh(R"(GameRes\Meshes\BasicMeshes\Sphere.gpmesh)", "Mesh_Sphere");
+	Assets::loadMesh(R"(GameRes\Meshes\RacingCar.gpmesh)", "Mesh_Car");
 
 	// -- Game specific meshes --
 
@@ -108,6 +113,10 @@ void Game::load()
 		additionalRot = Quaternion::concatenate(additionalRot, zRotPiOverFour);
 	}
 
+	// -- SPRITES TESTS --
+	//Actor* hud = new Actor();
+	//hud->setScale(1.6f);
+	//SpriteComponent* hudSprite = new SpriteComponent(hud, Assets::getTexture("ShipCockpit"));
 
 	//v Place floor / walls ==========================================
 	// Setup floor ==========================

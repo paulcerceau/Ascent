@@ -26,14 +26,19 @@ public:
 	void conjugate();
 	void normalize();
 
-	float lengthSq() const
+	inline float lengthSq() const
 	{
 		return (x * x + y * y + z * z + w * w);
 	}
 
-	float length() const
+	inline float length() const
 	{
 		return Maths::sqrt(lengthSq());
+	}
+
+	inline const Vector3& getVectorPart() const 
+	{
+		return (reinterpret_cast<const Vector3&>(x));
 	}
 
 	// Normalize the provided quaternion

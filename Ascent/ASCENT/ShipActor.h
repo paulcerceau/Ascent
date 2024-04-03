@@ -17,5 +17,8 @@ private:
 	class FlyingComponent* flyingComponent;
 	class AudioComponent* audioComponent;
 	class FpFlyingCameraComponent* flyingCameraComponent;
+
+	class SpriteComponent* spriteComponent;
+	class MeshComponent* meshComponent;
 };
 

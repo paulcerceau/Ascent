@@ -6,19 +6,30 @@
 #include "FpFlyingCameraComponent.h"
 #include "FlyingComponent.h"
 
+#include "MeshComponent.h"
+#include "SpriteComponent.h"
+
 #include "AudioSystem.h"
 #include "InputSystem.h"
+#include "Assets.h"
+
+#include <iostream>
 
 
 ShipActor::ShipActor() :
 	Actor(),
 	flyingComponent{ nullptr },
 	audioComponent{ nullptr },
-	flyingCameraComponent{ nullptr }
+	flyingCameraComponent{ nullptr },
+	spriteComponent{ nullptr },
+	meshComponent{ nullptr }
 {
 	flyingComponent = new FlyingComponent(this);
 	audioComponent = new AudioComponent(this);
 	flyingCameraComponent = new FpFlyingCameraComponent(this);
+	spriteComponent = new SpriteComponent(this, Assets::getTexture(""));
+	meshComponent = new MeshComponent(this);
+	// meshComponent->setMesh(Assets::getMesh("Mesh_Car"));
 }
 
 void ShipActor::updateActor(const float dt)
@@ -110,6 +121,5 @@ void ShipActor::actorInput(const InputState& inputState)
 		pitchSpeed *= maxPitchSpeed;
 	}
 	flyingComponent->setPitchSpeed(pitchSpeed);
-	flyingCameraComponent->setPitchSpeed(pitchSpeed);
 	//^ Movement (mouse) =============================================
 }
