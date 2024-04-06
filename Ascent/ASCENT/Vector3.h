@@ -80,6 +80,18 @@ public:
 		return *this;
 	}
 
+	static bool nearZero(Vector3 vector, float epsilon = 0.001f)
+	{
+		if (vector.length() <= epsilon)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	// Normalize the provided vector
 	static Vector3 normalize(const Vector3& vec)
 	{

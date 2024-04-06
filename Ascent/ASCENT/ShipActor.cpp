@@ -49,33 +49,37 @@ void ShipActor::actorInput(const InputState& inputState)
 
 	float rollSpeed = 0.0f;
 
+	Vector3 inputsVector = Vector3::zero;
+
 	// Forward 
 	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_W))
 	{
-		forwardSpeed += 400.0f;
+		inputsVector.x += 1;
 	}
 	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_S))
 	{
-		forwardSpeed -= 400.0f;
+		inputsVector.x -= 1;
 	}
 	// Strafe
 	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_A))
 	{
-		strafeSpeed -= 400.0f;
+		inputsVector.y -= 1;
 	}
 	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_D))
 	{
-		strafeSpeed += 400.0f;
+		inputsVector.y += 1;
 	}
 	// Elevation
 	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_SPACE))
 	{
-		elevationSpeed += 400.0f;
+		inputsVector.z += 1;
 	}
 	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_LSHIFT))
 	{
-		elevationSpeed -= 400.0f;
+		inputsVector.z -= 1;
 	}
+	flyingComponent->setInputsDirection(inputsVector);
+
 	// Roll
 	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_Q))
 	{
@@ -85,10 +89,6 @@ void ShipActor::actorInput(const InputState& inputState)
 	{
 		rollSpeed -= Maths::piOver2;
 	}
-
-	flyingComponent->setForwardSpeed(forwardSpeed);
-	flyingComponent->setStrafeSpeed(strafeSpeed);
-	flyingComponent->setElevationSpeed(elevationSpeed);
 
 	flyingComponent->setRollSpeed(rollSpeed);
 
