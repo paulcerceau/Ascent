@@ -31,7 +31,8 @@ public:
     void update(float dt) override;
 
 private:
-    void updateLocalVelocity();
+    void updateTargetVelocity();
+    void lerpDirections(float dt);
 
     Vector3 inputsDirection;
 
@@ -40,19 +41,24 @@ private:
     float elevationSpeed;
 
     const Vector3 MAX_SPEEDS{ 1000.0f, 500.0f, 500.0f };
-    const Vector3 MIN_SPEEDS{ -500.0f, -500.0f, -300.0f };
-    const Vector3 ACCELERATION_FACTORS{ 10.0f, 25.0f, 25.0f };
+    const Vector3 MIN_SPEEDS{ -500.0f, -500.0f, -500.0f };
+    const Vector3 ACCELERATION_FACTORS{ 20.0f, 25.0f, 25.0f };
+    const Vector3 DECELERATION_FACTORS{ 10.0f, 12.0f, 12.0f };
 
-    Vector3 localVelocity;
+    Vector3 currentVelocity;
+    Vector3 lastStoredVelocity;
+    Vector3 targetVelocity;
+    float velocityLerp;
+
     Vector3 forwardVelocity;
     Vector3 strafeVelocity;
     Vector3 elevationVelocity;
 
-    // On input store owner's vectors to improve 
-    // the feeling of controlling a flying vessel
-    Vector3 ownerForwardVectorOnInput;
-    Vector3 ownerRightVectorOnInput;
-    Vector3 ownerUpVectorOnInput;
+    Vector3 forwardDirection;
+    Vector3 rightDirection;
+    Vector3 upDirection;
+
+    Vector3 ownerForwardVectorOnInputTarget;
 
     float rollSpeed;
     float pitchSpeed;

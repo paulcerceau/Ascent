@@ -3,9 +3,9 @@
 #include <fmod_studio.h>
 
 #include "Actor.h"
+#include "SimpleLog.h"
 
 #include <iostream>
-
 
 FlyingComponent::FlyingComponent(Actor* ownerP, int updateOrderP)
 	: Component(ownerP, updateOrderP),
@@ -19,9 +19,9 @@ FlyingComponent::FlyingComponent(Actor* ownerP, int updateOrderP)
 	pitchSpeed{ 0.0f },
 	yawSpeed{ 0.0f },
 
-	ownerForwardVectorOnInput{ Vector3::zero },
-	ownerRightVectorOnInput{ Vector3::zero },
-	ownerUpVectorOnInput{ Vector3::zero }
+	forwardDirection{ Vector3::zero },
+	rightDirection{ Vector3::zero },
+	upDirection{ Vector3::zero }
 {
 }
 
@@ -71,6 +71,8 @@ void FlyingComponent::update(float dt)
 	//v Set owner rotation ===========================================
 	if (!Maths::nearZero(rollSpeed) || !Maths::nearZero(pitchSpeed) || !Maths::nearZero(yawSpeed))
 	{
+		// TODO: lerp rotations
+
 		Quaternion newRotation = owner.getRotation();
 
 		const float rollAngle = rollSpeed * dt;
@@ -86,76 +88,119 @@ void FlyingComponent::update(float dt)
 		const Quaternion yawIncrement(owner.getUp(), yawAngle);
 		newRotation = Quaternion::concatenate(newRotation, yawIncrement);
 
-		//std::cout << "Roll angle: " << rollAngle << std::endl;
-
 		owner.setRotation(newRotation);
 	}
+
 	//^ Set owner rotation ===========================================
 	//v Set owner position ===========================================
 
-	updateLocalVelocity();
+	updateTargetVelocity();
 
 	// Make sure that velocity is different than zero
 	// so that we don't calculate the position for nothing
-	if (!Vector3::nearZero(localVelocity))
+	if (!Vector3::nearZero(targetVelocity))
 	{
 		const Vector3 ownerPosition = owner.getPosition();
 
-		forwardVelocity = ownerForwardVectorOnInput * localVelocity.x * dt;
-		strafeVelocity = ownerRightVectorOnInput * localVelocity.y * dt;
-		elevationVelocity = ownerUpVectorOnInput * localVelocity.z * dt;
+		const Vector3 newVelocity = targetVelocity * dt;
 
-		const Vector3 actorVelocity = forwardVelocity + strafeVelocity + elevationVelocity;
-		const Vector3 newPosition = ownerPosition + actorVelocity;
+		const Vector3 newPosition = ownerPosition + newVelocity.x * forwardDirection + newVelocity.y * rightDirection + newVelocity.z * upDirection;
 
 		owner.setPosition(newPosition);
 	}
 	//^ Set owner position ===========================================
 }
 
-void FlyingComponent::updateLocalVelocity()
+
+void FlyingComponent::updateTargetVelocity()
 {
+	// TODO: smarter acceleration
+	#pragma region Acceleration
 	// -- ACCELERATION --
 	// Ignore acceleration calculation if no inputs were made
 	if (!Vector3::nearZero(inputsDirection)) 
 	{
+		// On input store owner's vectors to improve 
+		// the feeling of controlling a flying vessel
+
 		// Update forward component
 		if (inputsDirection.x != 0) {
-			localVelocity.x += ACCELERATION_FACTORS.x * inputsDirection.x;
-			localVelocity.x = Maths::clamp(localVelocity.x, MIN_SPEEDS.x, MAX_SPEEDS.x);
-			ownerForwardVectorOnInput = owner.getForward();
+			forwardDirection = owner.getForward();
+
+			if (targetVelocity.x <= MAX_SPEEDS.x && targetVelocity.x >= MIN_SPEEDS.x) {
+
+				const float thrustPower = ACCELERATION_FACTORS.x * inputsDirection.x;
+				targetVelocity.x += thrustPower;
+			}
+
+		//	const Vector3 currentForwardVelocity = localVelocity * forwardDirection;
+		//	const float magnitude = currentForwardVelocity.length();
+
+		//	if (magnitude <= MAX_SPEEDS.x) {
+
+		//		const float thrustPower = ACCELERATION_FACTORS.x;
+		//		localVelocity += forwardDirection * thrustPower;
+		//	}
 		}
 
 		// Update strafe component
 		if (inputsDirection.y != 0) {
-			localVelocity.y += ACCELERATION_FACTORS.y * inputsDirection.y;
-			localVelocity.y = Maths::clamp(localVelocity.y, MIN_SPEEDS.y, MAX_SPEEDS.y);
-			ownerRightVectorOnInput = owner.getRight();
+			rightDirection = owner.getRight();
+
+			if (targetVelocity.y <= MAX_SPEEDS.y && targetVelocity.y >= MIN_SPEEDS.y) {
+
+				const float thrustPower = ACCELERATION_FACTORS.y * inputsDirection.y;
+				targetVelocity.y += thrustPower;
+			}
 		}
 
 		// Update elevation component
 		if (inputsDirection.z != 0) {
-			localVelocity.z += ACCELERATION_FACTORS.z * inputsDirection.z;
-			localVelocity.z = Maths::clamp(localVelocity.z, MIN_SPEEDS.z, MAX_SPEEDS.z);
-			ownerUpVectorOnInput = owner.getUp();
+			upDirection = owner.getUp();
+
+			if (targetVelocity.z <= MAX_SPEEDS.z && targetVelocity.z >= MIN_SPEEDS.z) {
+
+				const float thrustPower = ACCELERATION_FACTORS.z * inputsDirection.z;
+				targetVelocity.z += thrustPower;
+			}
 		}
 	}
-
+	#pragma endregion Acceleration
+	#pragma region Deceleration
 	// -- DECELERATION --
-	// Actually is damping, should be improved later on
 	// Forward 
-	if (inputsDirection.x == 0 && !Maths::nearZero(localVelocity.x)) {
-		localVelocity.x *= 0.99f;
+	if (inputsDirection.x == 0 && !Maths::nearZero(targetVelocity.x)) {
+	//	const Vector3 forwardComponent = localVelocity * Vector3::absolute(forwardDirection);
+
+	//	if (!Vector3::nearZero(forwardComponent)) {
+
+	//		const Vector3 deceleration = forwardDirection * -1.0f * DECELERATION_FACTORS.x;
+
+	//		const float dot = Vector3::dot(Vector3::normalize(forwardComponent), Vector3::normalize(deceleration));
+
+	//		if (dot <= 0.95f) {
+	//			localVelocity += deceleration;
+
+	//			std::cout << "FORWARD" << std::endl;
+	//		}
+	//	}
+
+		targetVelocity.x *= 0.98f;
 	}
 	// Strafe 
-	if (inputsDirection.y == 0 && !Maths::nearZero(localVelocity.y)) {
-		localVelocity.y *= 0.99f;
+	if (inputsDirection.y == 0 && !Maths::nearZero(targetVelocity.y)) {
+		targetVelocity.y *= 0.98f;
 	}
 	// Elevation 
-	if (inputsDirection.z == 0 && !Maths::nearZero(localVelocity.z)) {
-		localVelocity.z *= 0.99f;
-	}
+	if (inputsDirection.z == 0 && !Maths::nearZero(targetVelocity.z)) {
+		targetVelocity.z *= 0.98f;
+	}	
 
-	//std::cout << "inputsDirection: " << inputsDirection.x << " " << inputsDirection.y << " " << inputsDirection.z << " | local velocity: " << localVelocity.x << " " << localVelocity.y << " " << localVelocity.z << std::endl;
+	//SimpleLog::logVector("localVelocity", localVelocity);
+	#pragma endregion Deceleration
 }
 
+void FlyingComponent::lerpDirections(float dt)
+{
+
+}
