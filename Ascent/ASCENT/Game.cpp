@@ -114,9 +114,9 @@ void Game::load()
 	}
 
 	// -- SPRITES TESTS --
-	//Actor* hud = new Actor();
-	//hud->setScale(1.6f);
-	//SpriteComponent* hudSprite = new SpriteComponent(hud, Assets::getTexture("ShipCockpit"));
+	Actor* hud = new Actor();
+	hud->setScale(1.6f);
+	SpriteComponent* hudSprite = new SpriteComponent(hud, Assets::getTexture("ShipCockpit"));
 
 	//v Place floor / walls ==========================================
 	// Setup floor ==========================

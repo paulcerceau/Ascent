@@ -48,6 +48,12 @@ private:
     Vector3 strafeVelocity;
     Vector3 elevationVelocity;
 
+    // On input store owner's vectors to improve 
+    // the feeling of controlling a flying vessel
+    Vector3 ownerForwardVectorOnInput;
+    Vector3 ownerRightVectorOnInput;
+    Vector3 ownerUpVectorOnInput;
+
     float rollSpeed;
     float pitchSpeed;
     float yawSpeed;

@@ -17,7 +17,11 @@ FlyingComponent::FlyingComponent(Actor* ownerP, int updateOrderP)
 	elevationVelocity{ Vector3::zero },
 	rollSpeed{ 0.0f },
 	pitchSpeed{ 0.0f },
-	yawSpeed{ 0.0f }
+	yawSpeed{ 0.0f },
+
+	ownerForwardVectorOnInput{ Vector3::zero },
+	ownerRightVectorOnInput{ Vector3::zero },
+	ownerUpVectorOnInput{ Vector3::zero }
 {
 }
 
@@ -97,9 +101,9 @@ void FlyingComponent::update(float dt)
 	{
 		const Vector3 ownerPosition = owner.getPosition();
 
-		forwardVelocity = owner.getForward() * localVelocity.x * dt;
-		strafeVelocity = owner.getRight() * localVelocity.y * dt;
-		elevationVelocity = owner.getUp() * localVelocity.z * dt;
+		forwardVelocity = ownerForwardVectorOnInput * localVelocity.x * dt;
+		strafeVelocity = ownerRightVectorOnInput * localVelocity.y * dt;
+		elevationVelocity = ownerUpVectorOnInput * localVelocity.z * dt;
 
 		const Vector3 actorVelocity = forwardVelocity + strafeVelocity + elevationVelocity;
 		const Vector3 newPosition = ownerPosition + actorVelocity;
@@ -118,19 +122,22 @@ void FlyingComponent::updateLocalVelocity()
 		// Update forward component
 		if (inputsDirection.x != 0) {
 			localVelocity.x += ACCELERATION_FACTORS.x * inputsDirection.x;
-			localVelocity.x = Maths::clamp(localVelocity.y, MIN_SPEEDS.x, MAX_SPEEDS.x);
+			localVelocity.x = Maths::clamp(localVelocity.x, MIN_SPEEDS.x, MAX_SPEEDS.x);
+			ownerForwardVectorOnInput = owner.getForward();
 		}
 
 		// Update strafe component
 		if (inputsDirection.y != 0) {
 			localVelocity.y += ACCELERATION_FACTORS.y * inputsDirection.y;
 			localVelocity.y = Maths::clamp(localVelocity.y, MIN_SPEEDS.y, MAX_SPEEDS.y);
+			ownerRightVectorOnInput = owner.getRight();
 		}
 
 		// Update elevation component
 		if (inputsDirection.z != 0) {
 			localVelocity.z += ACCELERATION_FACTORS.z * inputsDirection.z;
 			localVelocity.z = Maths::clamp(localVelocity.z, MIN_SPEEDS.z, MAX_SPEEDS.z);
+			ownerUpVectorOnInput = owner.getUp();
 		}
 	}
 
@@ -149,6 +156,6 @@ void FlyingComponent::updateLocalVelocity()
 		localVelocity.z *= 0.99f;
 	}
 
-	std::cout << "inputsDirection: " << inputsDirection.x << " " << inputsDirection.y << " " << inputsDirection.z << " | local velocity: " << localVelocity.x << " " << localVelocity.y << " " << localVelocity.z << std::endl;
+	//std::cout << "inputsDirection: " << inputsDirection.x << " " << inputsDirection.y << " " << inputsDirection.z << " | local velocity: " << localVelocity.x << " " << localVelocity.y << " " << localVelocity.z << std::endl;
 }
 
