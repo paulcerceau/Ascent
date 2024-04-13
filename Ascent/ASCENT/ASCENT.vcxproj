@@ -55,6 +55,7 @@
     <ClCompile Include="RendererOGL.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShipActor.cpp" />
+    <ClCompile Include="SimpleLog.cpp" />
     <ClCompile Include="SoundEvent.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="RendererOGL.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShipActor.h" />
+    <ClInclude Include="SimpleLog.h" />
     <ClInclude Include="SoundEvent.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SpriteComponent.h" />

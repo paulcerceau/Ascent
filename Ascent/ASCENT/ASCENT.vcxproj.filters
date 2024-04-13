@@ -193,6 +193,9 @@
     <ClCompile Include="FpFlyingCameraComponent.cpp">
       <Filter>Game\Components</Filter>
     </ClCompile>
+    <ClCompile Include="SimpleLog.cpp">
+      <Filter>Game\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -341,6 +344,9 @@
     </ClInclude>
     <ClInclude Include="FpFlyingCameraComponent.h">
       <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleLog.h">
+      <Filter>Game\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

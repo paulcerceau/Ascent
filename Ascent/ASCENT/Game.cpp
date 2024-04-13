@@ -33,8 +33,12 @@ void Game::load()
 {
 	inputSystem.setMouseRelativeMode(true);
 
+	#pragma region Loads
 	//v =============================================================╗
 	//v Load Shaders/Textures/Meshes                                 ║
+
+
+	// TODO: create new textures
 
 	// SHADERS ==============================
 	Assets::loadShader("GameRes\\Shaders\\Sprite.vert", "GameRes\\Shaders\\Sprite.frag", "", "", "", "Sprite");
@@ -63,6 +67,8 @@ void Game::load()
 
 	//^ Load Shaders/Textures/Meshes                                 ║
 	//^ =============================================================╝
+	#pragma endregion Loads
+	#pragma region Place actors
 	//v =============================================================╗
 	//v Place actors                                                 ║
 
@@ -157,9 +163,21 @@ void Game::load()
 		p->setPosition(Vector3(-start + size, start + i * size, 0.0f));
 		p->setRotation(q);
 	}
+	//^ Place floor / walls ==========================================
+	//v Sound actors =================================================
+
+	//// Create spheres with audio components playing different sounds
+	//Sphere* soundSphere = new Sphere();
+	//soundSphere->setPosition(Vector3(500.0f, -75.0f, 0.0f));
+	//soundSphere->setScale(1.0f);
+	//AudioComponent* ac = new AudioComponent(soundSphere);
+	//ac->playEvent("event:/FireLoop");
+
+	//^ Sound actors =================================================
 
 	//^ Place actors                                                 ║
 	//^ =============================================================╝
+	#pragma endregion Place actors
 
 	// Setup lights
 	renderer.setAmbientLight(Vector3(0.2f, 0.2f, 0.2f));
@@ -167,13 +185,6 @@ void Game::load()
 	dir.direction = Vector3(0.0f, -0.707f, -0.707f);
 	dir.diffuseColor = Vector3(0.78f, 0.88f, 1.0f);
 	dir.specColor = Vector3(0.8f, 0.8f, 0.8f);
-
-	// Create spheres with audio components playing different sounds
-	Sphere* soundSphere = new Sphere();
-	soundSphere->setPosition(Vector3(500.0f, -75.0f, 0.0f));
-	soundSphere->setScale(1.0f);
-	AudioComponent* ac = new AudioComponent(soundSphere);
-	ac->playEvent("event:/FireLoop");
 
 	// Start music
 	//musicEvent = audioSystem.playEvent("event:/Music");
@@ -233,6 +244,8 @@ void Game::processInput()
 
 void Game::update(float dt)
 {
+	// TODO: add collisions
+
 	// Update audio
 	audioSystem.update(dt);
 
