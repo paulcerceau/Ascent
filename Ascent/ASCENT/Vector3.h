@@ -92,7 +92,7 @@ public:
 		}
 	}
 
-	// Normalize the provided vector
+	// Return normalized provided vector
 	static Vector3 normalize(const Vector3& vec)
 	{
 		Vector3 temp = vec;
@@ -128,6 +128,17 @@ public:
 		return v - 2.0f * Vector3::dot(v, n) * n;
 	}
 
+	// Return vector with all positive components
+	static Vector3 absolute(const Vector3& v) {
+		Vector3 out = Vector3::zero;
+
+		out.x = abs(v.x);
+		out.y = abs(v.y);
+		out.z = abs(v.z);
+	
+		return out;
+	}
+
 	static Vector3 transform(const Vector3& vec, const class Matrix4& mat, float w = 1.0f);
 
 	// This will transform the vector and renormalize the w component
@@ -137,6 +148,7 @@ public:
 	static Vector3 transform(const Vector3& v, const class Quaternion& q);
 
 	static const Vector3 zero;
+	static const Vector3 one;
 	static const Vector3 unitX;
 	static const Vector3 unitY;
 	static const Vector3 unitZ;
